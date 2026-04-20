@@ -1,26 +1,70 @@
-//LEGGERE LE ISTRUZIONI NEL FILE README.md
+import java.util.NoSuchElementException;
 
-//Import di Classi Java necessarie al funzionamento del programma
-import java.util.Scanner;
+public class Pila<T>{
+    private Nodo<T> top;
 
-// Classe principale, con metodo main
-class Esercizio {
-    // Il programma parte con una chiamata a main().
-    public static void main(String args[])
-    {
-        //Variabili del programma
-        String nome;
+    public Pila(){
+        this.top = null;
+    }
 
-        //Creo l'oggetto in per l'input da tastiera
-        Scanner in = new Scanner( System.in );
+    public boolean isEmpty(){
+        return top == null;
+    }
 
-        //Leggo l'input da tastiera
-        System.out.print("Inserisci il tuo nome: ");
-        nome = in.nextLine();
+    public void push(T dato){
+        Nodo<T> nuovoNodo = new Nodo<>(dato);
 
-        //Output del nome acquisito da tastiera
-        System.out.println("Ciao "+nome+"!");
+        nuovoNodo.next = top;
+        top = nuovoNodo;
+    }
+
+    public T pop(){
+        if(top == null){
+            throw new NoSuchElementException("Pila vuota!");
+        }
+
+        T dato = top.dato;
+        top = top.next;
+
+        return dato;
+    }
+
+    public T peek(){
+        if(top == null){
+            throw new NoSuchElementException("Pila vuota!");
+        }
+
+        return top.dato;
+    }
+
+    public int size(){
+        Nodo<T> attuale = top;
+
+        int count = 0;
+        while(attuale != null){
+            attuale = attuale.next;
+            ++count;
+        }
+
+        return count;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+
+        Nodo<T> attuale = top;
+
+        str.append("top");
+        while (attuale != null) {
+            str.append("--->");
+            str.append(attuale.dato);
+            
+            attuale = attuale.next;
+        }
+
+        str.append("--->NULL");
+
+        return str.toString();
     }
 }
-
-//LEGGERE LE ISTRUZIONI NEL FILE README.md
